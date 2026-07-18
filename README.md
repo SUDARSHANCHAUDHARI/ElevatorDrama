@@ -1,5 +1,10 @@
 # ElevatorDrama
 
+[![Version 1.0.0](https://img.shields.io/badge/version-1.0.0-e9a93f)](CHANGELOG.md)
+[![License: MIT](https://img.shields.io/badge/license-MIT-182626)](LICENSE)
+![Vanilla JavaScript](https://img.shields.io/badge/JavaScript-vanilla-f7df1e?logo=javascript&logoColor=182626)
+![Runtime dependencies: 0](https://img.shields.io/badge/runtime_dependencies-0-6faf9b)
+
 An interactive cartoon elevator that makes every trip unnecessarily dramatic. Choose a floor, endure a few entirely avoidable incidents, and eventually arrive where you asked to go.
 
 ElevatorDrama is a standalone static web project built with semantic HTML, hand-written CSS, inline SVG artwork, and vanilla JavaScript. It has no runtime dependencies, no external fonts, and no prerecorded media.
@@ -19,22 +24,41 @@ ElevatorDrama is a standalone static web project built with semantic HTML, hand-
 - Restrictive content-security policy and production security headers
 - Dependency-free Node tests for state behavior and the project contract
 
-## Run locally
+## Technology
 
-Requirements:
+- **Structure:** Semantic HTML5
+- **Presentation:** Hand-written responsive CSS and inline SVG artwork
+- **Behavior:** Vanilla JavaScript using native ES modules
+- **Audio:** Runtime-generated Web Audio API oscillators; no prerecorded media
+- **Testing:** Node.js built-in test runner and static project-contract checks
+- **Package commands:** pnpm, with no install-time or runtime dependencies
+- **Deployment:** Portable static files with Vercel and Netlify security configurations
+
+## Installation and local development
+
+### Requirements
 
 - Python 3 for the local static server
 - Node.js 20 or newer for project checks
+- pnpm 10 or newer for the documented commands
 
-From the project directory:
+### Clone and run
+
+```bash
+git clone https://github.com/SUDARSHANCHAUDHARI/ElevatorDrama.git
+cd ElevatorDrama
+pnpm dev
+```
+
+Because the repository is private, cloning requires access through an authenticated GitHub account. Open [http://localhost:4173](http://localhost:4173) after the server starts.
+
+No dependency installation or build step is required. You can also use any static file server; ES modules require the project to be served over HTTP rather than opened directly with a `file://` URL.
+
+### Run from an existing checkout
 
 ```bash
 pnpm dev
 ```
-
-Open [http://localhost:4173](http://localhost:4173).
-
-You can also use any static file server. ES modules require the project to be served over HTTP rather than opened directly with a `file://` URL.
 
 ## Controls
 
@@ -128,6 +152,18 @@ No rollback migration is required: the app stores no user data. Reverting the de
 
 ElevatorDrama has no backend, analytics, remote API calls, or persisted user data. See [SECURITY.md](SECURITY.md) for private vulnerability reporting instructions.
 
+## Author
+
+**Sudarshan Chaudhari**<br />
+Founder and developer, **SudarshanTechLabs**
+
+- **GitHub:** [@SUDARSHANCHAUDHARI](https://github.com/SUDARSHANCHAUDHARI)
+- **Repository:** [SUDARSHANCHAUDHARI/ElevatorDrama](https://github.com/SUDARSHANCHAUDHARI/ElevatorDrama)
+- **Business and project contact:** [sudarshantechlabs@gmail.com](mailto:sudarshantechlabs@gmail.com)
+- **Based in:** Bangkok, Thailand
+
+For suspected vulnerabilities, follow the private reporting process in [SECURITY.md](SECURITY.md) rather than opening a public issue.
+
 ## License
 
-MIT © 2026 SudarshanTechLabs
+Copyright © 2026 Sudarshan Chaudhari / SudarshanTechLabs. Released under the [MIT License](LICENSE).

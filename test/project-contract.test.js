@@ -74,3 +74,16 @@ test("deployment metadata is valid and applies security headers", () => {
   assert.match(netlify, /Content-Security-Policy/);
   assert.match(netlify, /X-Content-Type-Options/);
 });
+
+test("project documentation identifies the verified author and ownership", () => {
+  const readme = read("README.md");
+  const packageMetadata = JSON.parse(read("package.json"));
+
+  assert.match(readme, /## Author/);
+  assert.match(readme, /Sudarshan Chaudhari/);
+  assert.match(readme, /SudarshanTechLabs/);
+  assert.match(readme, /SUDARSHANCHAUDHARI/);
+  assert.match(readme, /sudarshantechlabs@gmail\.com/);
+  assert.equal(packageMetadata.author.name, "Sudarshan Chaudhari");
+  assert.equal(packageMetadata.author.email, "sudarshantechlabs@gmail.com");
+});

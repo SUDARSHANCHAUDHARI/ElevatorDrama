@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "description": "An interactive cartoon elevator that makes every trip unnecessarily dramatic.",
-  "author": "SudarshanTechLabs",
+  "author": {
+    "name": "Sudarshan Chaudhari",
+    "email": "sudarshantechlabs@gmail.com",
+    "url": "https://github.com/SUDARSHANCHAUDHARI"
+  },
   "type": "module",
   "scripts": {
     "dev": "python3 -m http.server 4173",
