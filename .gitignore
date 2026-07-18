@@ -1,0 +1,38 @@
+.DS_Store
+
+# Dependencies and generated output
+node_modules/
+coverage/
+dist/
+.cache/
+.parcel-cache/
+.pnpm-store/
+
+# Deployment tooling
+.vercel/
+.netlify/
+
+# Logs and temporary files
+*.log
+*.tmp
+tmp/
+
+# Local editors and operating systems
+.idea/
+.vscode/
+Thumbs.db
+
+# Environment and local configuration
+.env
+.env.*
+!.env.example
+local.properties
+secure.properties
+keystore.properties
+
+# Private keys and signing material
+*.key
+*.pem
+*.p12
+*.jks
+*.keystore

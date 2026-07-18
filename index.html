@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="ElevatorDrama is a cartoon elevator that turns every simple floor request into a completely unnecessary ordeal."
+    />
+    <meta name="theme-color" content="#182626" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'"
+    />
+    <meta name="referrer" content="no-referrer" />
+    <title>ElevatorDrama — Going up, eventually</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="app.js"></script>
+  </head>
+  <body data-machine-state="idle">
+    <a class="skip-link" href="#floor-controls">Skip to floor controls</a>
+    <div class="wallpaper" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div class="agency-mark" aria-hidden="true">
+        <svg viewBox="0 0 56 56" role="img">
+          <path d="M28 3 51 16v24L28 53 5 40V16Z" fill="currentColor" />
+          <path d="M19 17h18v24H19z" fill="#f4ebcb" />
+          <path d="M22 20h12v18H22z" fill="#6faf9b" />
+          <path d="m23 15 5-6 5 6m-10 28 5 6 5-6" fill="none" stroke="#f4ebcb" stroke-width="3" />
+        </svg>
+      </div>
+      <div class="title-lockup">
+        <p class="eyebrow">Department of vertical affairs · Permit no. 08</p>
+        <h1><span>Elevator</span> <em>Drama</em></h1>
+      </div>
+      <p class="tagline">Going up.<br /><strong>Emotionally, it’s complicated.</strong></p>
+    </header>
+
+    <main id="main-content" class="experience" aria-busy="false">
+      <section class="elevator-theater" aria-labelledby="elevator-heading">
+        <h2 id="elevator-heading" class="visually-hidden">Interactive elevator</h2>
+
+        <div class="theater-crown" aria-hidden="true">
+          <span></span>
+          <p>Automatic passenger conveyance</p>
+          <span></span>
+        </div>
+
+        <div id="elevator" class="elevator-shell" data-state="idle">
+          <div class="indicator-housing">
+            <span id="direction-readout" class="direction-readout" aria-hidden="true">•</span>
+            <span
+              id="floor-readout"
+              class="floor-readout"
+              role="status"
+              aria-live="off"
+              aria-label="Elevator at floor 1"
+            >1</span>
+            <span class="indicator-caption">FLOOR</span>
+          </div>
+
+          <div id="doorway" class="doorway" data-scene="lobby">
+            <div class="doorway-scene" aria-hidden="true">
+              <svg class="scene-art" viewBox="0 0 500 660" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                  <pattern id="cabPattern" width="36" height="36" patternUnits="userSpaceOnUse">
+                    <path d="M0 18h36M18 0v36" stroke="currentColor" stroke-width="1" opacity=".16" />
+                    <circle cx="18" cy="18" r="3" fill="currentColor" opacity=".2" />
+                  </pattern>
+                </defs>
+                <rect width="500" height="660" class="scene-wall" />
+                <rect width="500" height="660" fill="url(#cabPattern)" />
+                <path d="M0 510h500v150H0z" class="scene-floor" />
+                <path d="m0 510 250-95 250 95M95 660l155-245m155 245L250 415" class="floor-lines" />
+                <circle cx="250" cy="168" r="76" class="scene-medallion" />
+                <text id="scene-symbol" x="250" y="198" text-anchor="middle" class="scene-symbol">1</text>
+                <path d="M52 298h396M52 314h396" class="scene-rule" />
+                <text id="scene-title" x="250" y="357" text-anchor="middle" class="scene-title">GROUND FLOOR</text>
+                <text id="scene-subtitle" x="250" y="389" text-anchor="middle" class="scene-subtitle">PLEASE EXIT CALMLY</text>
+              </svg>
+
+              <div id="tiny-operator" class="tiny-operator">
+                <svg viewBox="0 0 120 190" role="img" aria-label="A tiny elevator operator tips his cap">
+                  <ellipse cx="60" cy="177" rx="42" ry="8" fill="#0b1414" opacity=".35" />
+                  <path d="M34 78h52l12 75H22z" fill="#e85c4a" stroke="#182626" stroke-width="5" />
+                  <path d="M59 81v70M34 111h51" fill="none" stroke="#f4ebcb" stroke-width="5" />
+                  <circle cx="60" cy="56" r="31" fill="#f0c69f" stroke="#182626" stroke-width="5" />
+                  <circle cx="49" cy="55" r="3" fill="#182626" />
+                  <circle cx="70" cy="55" r="3" fill="#182626" />
+                  <path d="M51 68q9 7 18 0" fill="none" stroke="#182626" stroke-width="4" stroke-linecap="round" />
+                  <path d="M26 40q34-34 68 0v11H26z" fill="#e9a93f" stroke="#182626" stroke-width="5" />
+                  <path d="M23 49h74" stroke="#182626" stroke-width="6" stroke-linecap="round" />
+                  <path class="operator-arm" d="m88 90 22-31" fill="none" stroke="#f0c69f" stroke-width="12" stroke-linecap="round" />
+                </svg>
+                <span>Reginald<br />Acting operator</span>
+              </div>
+            </div>
+
+            <div id="doors" class="doors" data-open="true" aria-hidden="true">
+              <div class="door door--left">
+                <span class="door-inlay"></span>
+                <span class="door-chevron">UP?</span>
+              </div>
+              <div class="door door--right">
+                <span class="door-inlay"></span>
+                <span class="door-chevron">MAYBE</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="threshold" aria-hidden="true">
+            <span>Mind the theatrical pause</span>
+          </div>
+          <div class="call-lamp" aria-hidden="true"><span></span></div>
+        </div>
+      </section>
+
+      <aside class="control-column" aria-label="Elevator controls and status">
+        <section id="floor-controls" class="control-panel" aria-labelledby="controls-heading">
+          <div class="panel-heading">
+            <div>
+              <p class="panel-kicker">Passenger request unit</p>
+              <h2 id="controls-heading">Choose a floor</h2>
+            </div>
+            <span id="service-lamp" class="service-lamp"><i></i> Ready</span>
+          </div>
+
+          <div class="floor-grid" aria-label="Floor selection buttons">
+            <button class="floor-button" type="button" data-floor="8" aria-label="Go to floor 8"><span>8</span><small>Roof-ish</small></button>
+            <button class="floor-button" type="button" data-floor="7" aria-label="Go to floor 7"><span>7</span><small>Legal</small></button>
+            <button class="floor-button" type="button" data-floor="6" aria-label="Go to floor 6"><span>6</span><small>Clouds</small></button>
+            <button class="floor-button" type="button" data-floor="5" aria-label="Go to floor 5"><span>5</span><small>Accounts</small></button>
+            <button class="floor-button" type="button" data-floor="4" aria-label="Go to floor 4"><span>4</span><small>Plants</small></button>
+            <button class="floor-button" type="button" data-floor="3" aria-label="Go to floor 3"><span>3</span><small>Mystery</small></button>
+            <button class="floor-button" type="button" data-floor="2" aria-label="Go to floor 2"><span>2</span><small>Snacks</small></button>
+            <button class="floor-button" type="button" data-floor="1" aria-label="Go to floor 1"><span>1</span><small>Lobby</small></button>
+          </div>
+
+          <p class="keyboard-note"><kbd>1</kbd>–<kbd>8</kbd> select a floor <span>·</span> <kbd>Esc</kbd> resets the elevator</p>
+
+          <div class="utility-controls">
+            <button id="sound-toggle" class="utility-button sound-toggle" type="button" aria-pressed="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9Zm12.5-.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" /></svg>
+              <span>Sound on</span>
+            </button>
+            <label class="volume-control" for="volume">
+              <span>Volume</span>
+              <input id="volume" type="range" min="0" max="100" value="42" />
+              <output id="volume-output" for="volume">42%</output>
+            </label>
+            <button id="reset-button" class="utility-button reset-button" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8V3m0 0h5M4 3l3.7 3.7A7 7 0 1 1 5 15" /></svg>
+              <span>Reset</span>
+            </button>
+          </div>
+        </section>
+
+        <section id="status-board" class="status-board" data-tone="neutral" aria-labelledby="status-heading">
+          <div class="status-meta">
+            <p id="status-heading">Live incident report</p>
+            <p id="attempt-label">Car 01 · Standing by</p>
+          </div>
+          <div class="status-rule" aria-hidden="true"><span></span><i></i><span></span></div>
+          <p id="status-message" class="status-message" role="status" aria-live="polite" aria-atomic="true">
+            Select a floor. The elevator will take it personally.
+          </p>
+          <div class="attempt-track" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </section>
+      </aside>
+    </main>
+
+    <footer class="site-footer">
+      <p>Inspected by the Bureau of Unnecessary Suspense</p>
+      <p>Capacity: 8 persons or 1 tiny operator</p>
+    </footer>
+
+    <noscript>
+      <p class="noscript-message">This elevator requires JavaScript. The stairs are judgmental but operational.</p>
+    </noscript>
+  </body>
+</html>

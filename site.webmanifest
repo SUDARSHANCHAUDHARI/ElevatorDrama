@@ -1,0 +1,17 @@
+{
+  "name": "ElevatorDrama",
+  "short_name": "ElevatorDrama",
+  "description": "An interactive cartoon elevator that makes every trip unnecessarily dramatic.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f4ebcb",
+  "theme_color": "#182626",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
