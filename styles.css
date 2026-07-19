@@ -1,18 +1,25 @@
 /* ElevatorDrama — a cartoon civic building with theatrical ambitions. */
 :root {
-  --shaft-ink: #182626;
+  --ink: #15152a;
+  --paper: #fff5df;
+  --coral: #ff5d5d;
+  --blue: #4f7cff;
+  --butter: #ffd166;
+  --mint: #58d6a9;
+  --lilac: #b695ff;
+  --shaft-ink: var(--ink);
   --deep-cab: #0b1414;
-  --service-mint: #6faf9b;
-  --service-mint-light: #a7d2bb;
-  --brass: #e9a93f;
-  --brass-dark: #9c611f;
-  --paper: #f4ebcb;
+  --service-mint: var(--mint);
+  --service-mint-light: var(--mint);
+  --brass: var(--butter);
+  --brass-dark: #77501f;
   --paper-dim: #d9cfae;
-  --alarm: #e85c4a;
+  --alarm: var(--coral);
+  --alarm-text: #a83b44;
   --white: #fffaf0;
   --shadow: rgba(11, 20, 20, 0.28);
-  --display-font: "Arial Narrow", "Avenir Next Condensed", "Roboto Condensed", sans-serif;
-  --body-font: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+  --display-font: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  --body-font: "Arial Rounded MT Bold", "Avenir Next Rounded", "Trebuchet MS", ui-rounded, system-ui, sans-serif;
   --dramatic-font: Georgia, "Times New Roman", serif;
   --data-font: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   color-scheme: light;
@@ -24,14 +31,14 @@
 }
 
 html {
-  min-width: 320px;
+  min-width: 0;
   scroll-behavior: smooth;
 }
 
 body {
   min-height: 100vh;
   margin: 0;
-  overflow-x: hidden;
+  overflow-x: clip;
   color: var(--shaft-ink);
   background: var(--paper);
   font-family: var(--body-font);
@@ -161,7 +168,7 @@ button {
 }
 
 .tagline strong {
-  color: var(--alarm);
+  color: var(--alarm-text);
   font-weight: 700;
 }
 
@@ -571,7 +578,8 @@ button {
   color: var(--paper);
   background: var(--shaft-ink);
   border: 3px solid var(--shaft-ink);
-  box-shadow: 0.65rem 0.65rem 0 var(--brass);
+  border-radius: 1.25rem;
+  box-shadow: 0.65rem 0.65rem 0 var(--blue);
 }
 
 .panel-heading {
@@ -647,8 +655,9 @@ body[data-machine-state="resetting"] .service-lamp {
   padding: 0.4rem 0.65rem;
   color: var(--paper);
   background: transparent;
-  border: 1px solid rgba(244, 235, 203, 0.38);
-  border-radius: 0;
+  border: 2px solid var(--paper);
+  border-radius: 0.75rem;
+  box-shadow: 3px 3px 0 var(--blue);
   cursor: pointer;
   transition: color 140ms ease, background-color 140ms ease, border-color 140ms ease, transform 140ms ease;
 }
@@ -696,6 +705,11 @@ body[data-machine-state="resetting"] .service-lamp {
   background: var(--service-mint-light);
   border-color: var(--service-mint-light);
   transform: translateY(-2px);
+}
+
+.floor-button:active:not(:disabled) {
+  box-shadow: 1px 1px 0 var(--blue);
+  transform: translate(2px, 2px);
 }
 
 .floor-button[data-selected="true"] {
@@ -760,10 +774,11 @@ kbd {
   gap: 0.4rem;
   min-height: 2.8rem;
   padding: 0.52rem 0.72rem;
-  color: var(--paper);
-  background: transparent;
-  border: 1px solid rgba(244, 235, 203, 0.45);
-  border-radius: 0;
+  color: var(--ink);
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  border-radius: 0.75rem;
+  box-shadow: 3px 3px 0 var(--blue);
   cursor: pointer;
   font-family: var(--data-font);
   font-size: 0.58rem;
@@ -773,7 +788,12 @@ kbd {
 
 .utility-button:hover {
   color: var(--shaft-ink);
-  background: var(--paper);
+  background: var(--butter);
+}
+
+.utility-button:active {
+  box-shadow: 1px 1px 0 var(--blue);
+  transform: translate(2px, 2px);
 }
 
 .utility-button svg {
@@ -786,7 +806,7 @@ kbd {
 }
 
 .sound-toggle[aria-pressed="false"] {
-  color: var(--paper-dim);
+  color: var(--ink);
   text-decoration: line-through;
 }
 
@@ -797,7 +817,8 @@ kbd {
   gap: 0.2rem 0.55rem;
   min-width: 0;
   padding: 0.35rem 0.6rem;
-  border: 1px solid rgba(244, 235, 203, 0.28);
+  border: 2px solid var(--paper);
+  border-radius: 0.75rem;
   font-family: var(--data-font);
   font-size: 0.52rem;
   letter-spacing: 0.06em;
@@ -813,7 +834,7 @@ kbd {
 }
 
 .volume-control output {
-  color: var(--service-mint-light);
+  color: var(--lilac);
   text-align: right;
 }
 
@@ -823,7 +844,8 @@ kbd {
   padding: 1.1rem 1.25rem 1rem;
   background: var(--white);
   border: 3px solid var(--shaft-ink);
-  box-shadow: 0.65rem 0.65rem 0 var(--service-mint);
+  border-radius: 1.25rem;
+  box-shadow: 0.65rem 0.65rem 0 var(--blue);
   transition: background-color 180ms ease, box-shadow 180ms ease;
 }
 
@@ -940,6 +962,20 @@ kbd {
   margin: 0;
 }
 
+.tinychaos-credit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.8rem;
+}
+
+.tinychaos-credit a {
+  color: var(--ink);
+  font-weight: 900;
+  text-decoration-color: var(--blue);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 3px;
+}
+
 .noscript-message {
   position: fixed;
   right: 1rem;
@@ -955,8 +991,8 @@ kbd {
 }
 
 :focus-visible {
-  outline: 3px solid var(--alarm);
-  outline-offset: 3px;
+  outline: 4px solid var(--blue);
+  outline-offset: 4px;
 }
 
 body[data-machine-state="moving"] .elevator-shell {
