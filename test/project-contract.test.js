@@ -58,6 +58,7 @@ test("the interface follows the shared TinyChaos UI family", () => {
   assert.match(css, /\.floor-button\s*\{[^}]*border-radius:[^}]*box-shadow:[^}]*var\(--blue\)/s);
   assert.match(css, /\.utility-button\s*\{[^}]*border:\s*3px solid var\(--ink\)[^}]*border-radius:[^}]*var\(--blue\)/s);
   assert.match(css, /\.sound-toggle\[aria-pressed="false"\]\s*\{[^}]*color:\s*var\(--ink\)/s);
+  assert.match(css, /\.title-lockup h1 em\s*\{[^}]*color:\s*var\(--alarm-text\)/s);
   assert.match(css, /--display-font:\s*Impact/);
   assert.match(css, /--body-font:\s*"Arial Rounded MT Bold"/);
   assert.match(css, /overflow-x:\s*clip/);

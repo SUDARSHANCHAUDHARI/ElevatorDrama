@@ -148,7 +148,7 @@ button {
 }
 
 .title-lockup h1 em {
-  color: var(--alarm);
+  color: var(--alarm-text);
   font-family: var(--dramatic-font);
   font-size: 0.68em;
   font-weight: 700;
