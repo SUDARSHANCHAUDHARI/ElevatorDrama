@@ -17,6 +17,31 @@ function contrastRatio(first, second) {
   return (values[0] + 0.05) / (values[1] + 0.05);
 }
 
+function ruleBody(source, selector) {
+  const start = source.indexOf(`${selector} {`);
+  assert.notEqual(start, -1, `Missing CSS rule ${selector}`);
+  return source.slice(source.indexOf("{", start) + 1, source.indexOf("}", start));
+}
+
+function declaration(source, selector, property) {
+  const match = ruleBody(source, selector).match(
+    new RegExp(`(?:^|\\n)\\s*${property.replace(/[.*+?^${}()|[\\]\\]/g, "\\$&")}\\s*:\\s*([\\s\\S]*?);`),
+  );
+  assert.ok(match, `Missing ${property} in ${selector}`);
+  return match[1].trim();
+}
+
+function resolvedColor(source, value, seen = new Set()) {
+  const variable = value.match(/^var\(--([^)]+)\)$/);
+  if (!variable) {
+    assert.match(value, /^#[0-9a-f]{6}$/i, `Unsupported color ${value}`);
+    return value.toLowerCase();
+  }
+  assert.equal(seen.has(variable[1]), false, `Circular CSS variable --${variable[1]}`);
+  seen.add(variable[1]);
+  return resolvedColor(source, declaration(source, ":root", `--${variable[1]}`), seen);
+}
+
 test("the HTML exposes the complete interactive surface", () => {
   const html = read("index.html");
   for (const requiredId of [
@@ -54,6 +79,7 @@ test("the interface follows the shared TinyChaos UI family", () => {
   sharedPalette.forEach((color) => assert.match(css, new RegExp(color, "i")));
   assert.match(html, /href="https:\/\/sudarshanchaudhari\.github\.io\/TinyChaos\/"/);
   assert.match(html, /ElevatorDrama · by Sudarshan Chaudhari/);
+  assert.match(html, /Inspected by the Bureau of Unnecessary Suspense/);
   assert.match(css, /:focus-visible\s*\{[^}]*outline:\s*4px solid var\(--blue\)/s);
   assert.match(css, /\.floor-button\s*\{[^}]*border-radius:[^}]*box-shadow:[^}]*var\(--blue\)/s);
   assert.match(css, /\.utility-button\s*\{[^}]*border:\s*3px solid var\(--ink\)[^}]*border-radius:[^}]*var\(--blue\)/s);
@@ -62,13 +88,57 @@ test("the interface follows the shared TinyChaos UI family", () => {
   assert.match(css, /--display-font:\s*Impact/);
   assert.match(css, /--body-font:\s*"Arial Rounded MT Bold"/);
   assert.match(css, /overflow-x:\s*clip/);
-  assert.ok(contrastRatio("#a83b44", "#fff5df") >= 4.5, "small coral text alias must meet WCAG AA");
-  assert.ok(contrastRatio("#4f7cff", "#fff5df") >= 3, "blue focus must contrast with paper");
-  assert.ok(contrastRatio("#4f7cff", "#15152a") >= 3, "blue focus must contrast with ink");
+  assert.equal(declaration(css, ".floor-button", "border"), "3px solid var(--ink)");
+  assert.equal(declaration(css, ".floor-button", "box-shadow"), "3px 3px 0 var(--blue)");
+  assert.equal(declaration(css, ".volume-control", "border"), "3px solid var(--ink)");
+  assert.equal(declaration(css, ".volume-control", "box-shadow"), "3px 3px 0 var(--blue)");
 
-  for (const rule of css.matchAll(/(?:^|\n)(?:html|body)\s*\{([^}]*)\}/g)) {
-    assert.doesNotMatch(rule[1], /min-width:\s*(?:280|320)px/);
-  }
+  const pageBackground = resolvedColor(css, declaration(css, "body", "background"));
+  assert.ok(
+    contrastRatio(resolvedColor(css, declaration(css, ".title-lockup h1 em", "color")), pageBackground) >= 4.5,
+    "Title accent must meet WCAG AA",
+  );
+  assert.ok(
+    contrastRatio(
+      resolvedColor(css, declaration(css, ".noscript-message", "color")),
+      resolvedColor(css, declaration(css, ".noscript-message", "background")),
+    ) >= 4.5,
+    "No-script message must meet WCAG AA",
+  );
+  assert.ok(
+    contrastRatio(
+      resolvedColor(css, declaration(css, ".floor-button", "color")),
+      resolvedColor(css, declaration(css, ".floor-button", "background")),
+    ) >= 4.5,
+    "Floor control text must meet WCAG AA",
+  );
+  assert.ok(
+    contrastRatio(
+      resolvedColor(css, declaration(css, ".volume-control output", "color")),
+      resolvedColor(css, declaration(css, ".volume-control", "background")),
+    ) >= 4.5,
+    "Volume output must meet WCAG AA",
+  );
+
+  const widths = [...css.matchAll(/@media \(max-width: (\d+)px\)\s*\{/g)].map((match) => Number(match[1]));
+  assert.deepEqual(widths, [900, 620, 390], "Width breakpoints must cover tablet and 320/375px layouts");
+  const positions = [
+    css.indexOf("@media (max-width: 900px) {"),
+    css.indexOf("@media (max-width: 620px) {"),
+    css.indexOf("@media (max-width: 390px) {"),
+    css.indexOf("@media (max-width: 640px) and (max-height: 500px) {"),
+    css.indexOf("@media (prefers-reduced-motion: reduce) {"),
+  ];
+  assert.ok(positions.every((position) => position >= 0));
+  assert.deepEqual([...positions].sort((a, b) => a - b), positions, "Responsive cascade order changed");
+  const narrowSection = css.slice(positions[3], positions[4]);
+  assert.equal(declaration(narrowSection, ".experience", "padding-top"), "1rem");
+  assert.doesNotMatch(css.slice(positions[4]), /\.experience\s*\{[^}]*padding-top\s*:/s);
+  assert.equal(declaration(css, "body", "overflow-y"), "auto");
+  assert.equal(declaration(css, "body", "overflow-x"), "clip");
+  assert.equal(declaration(css, "html", "min-width"), "0");
+  assert.doesNotMatch(ruleBody(css, "body"), /min-width\s*:\s*(?!0(?:px)?\s*;)/, "Body has a positive minimum width");
+  assert.match(declaration(css, ".experience", "width"), /1180px/, "Base rule must retain laptop/desktop cap");
 });
 
 test("the app includes generated audio and cancellable sequences", () => {

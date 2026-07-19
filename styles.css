@@ -39,6 +39,7 @@ body {
   min-height: 100vh;
   margin: 0;
   overflow-x: clip;
+  overflow-y: auto;
   color: var(--shaft-ink);
   background: var(--paper);
   font-family: var(--body-font);
@@ -653,9 +654,9 @@ body[data-machine-state="resetting"] .service-lamp {
   gap: 0.72rem;
   min-height: 3.65rem;
   padding: 0.4rem 0.65rem;
-  color: var(--paper);
-  background: transparent;
-  border: 2px solid var(--paper);
+  color: var(--ink);
+  background: var(--paper);
+  border: 3px solid var(--ink);
   border-radius: 0.75rem;
   box-shadow: 3px 3px 0 var(--blue);
   cursor: pointer;
@@ -817,8 +818,11 @@ kbd {
   gap: 0.2rem 0.55rem;
   min-width: 0;
   padding: 0.35rem 0.6rem;
-  border: 2px solid var(--paper);
+  color: var(--ink);
+  background: var(--paper);
+  border: 3px solid var(--ink);
   border-radius: 0.75rem;
+  box-shadow: 3px 3px 0 var(--blue);
   font-family: var(--data-font);
   font-size: 0.52rem;
   letter-spacing: 0.06em;
@@ -834,7 +838,7 @@ kbd {
 }
 
 .volume-control output {
-  color: var(--lilac);
+  color: var(--ink);
   text-align: right;
 }
 
@@ -984,7 +988,7 @@ kbd {
   z-index: 20;
   margin: 0;
   padding: 1rem;
-  color: var(--paper);
+  color: var(--ink);
   background: var(--alarm);
   border: 3px solid var(--shaft-ink);
   text-align: center;
@@ -1115,6 +1119,12 @@ body[data-machine-state="success"] .elevator-shell {
     display: block;
     height: 0.25rem;
     color: transparent;
+  }
+}
+
+@media (max-width: 640px) and (max-height: 500px) {
+  .experience {
+    padding-top: 1rem;
   }
 }
 
